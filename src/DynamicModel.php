@@ -3,7 +3,7 @@
  * @author Alexey Samoylov <alexey.samoylov@gmail.com>
  */
 
-namespace lagman\eav;
+namespace yarcode\eav;
 
 use Yii;
 use yii\base\DynamicModel as BaseDynamicModel;
@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * Class DynamicModel
- * @package lagman\eav
+ * @package yarcode\eav
  */
 class DynamicModel extends BaseDynamicModel
 {

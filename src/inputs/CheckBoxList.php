@@ -3,14 +3,14 @@
  * @author Alexey Samoylov <alexey.samoylov@gmail.com>
  */
 
-namespace lagman\eav\inputs;
+namespace yarcode\eav\inputs;
 
-use lagman\eav\AttributeHandler;
+use yarcode\eav\AttributeHandler;
 use yii\helpers\ArrayHelper;
 
 class CheckBoxList extends AttributeHandler
 {
-    const VALUE_HANDLER_CLASS = '\lagman\eav\MultipleOptionsValueHandler';
+    const VALUE_HANDLER_CLASS = '\yarcode\eav\MultipleOptionsValueHandler';
 
     public function init()
     {

@@ -3,11 +3,11 @@
  * @author Alexey Samoylov <alexey.samoylov@gmail.com>
  */
 
-namespace lagman\eav;
+namespace yarcode\eav;
 
 /**
  * Class RawValueHandler
- * @package lagman\eav
+ * @package yarcode\eav
  */
 class RawValueHandler extends ValueHandler
 {

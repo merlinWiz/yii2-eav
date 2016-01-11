@@ -3,11 +3,11 @@
  * @author Alexey Samoylov <alexey.samoylov@gmail.com>
  */
 
-namespace lagman\eav;
+namespace yarcode\eav;
 
 /**
  * Class OptionValueHandler
- * @package lagman\eav
+ * @package yarcode\eav
  */
 class OptionValueHandler extends ValueHandler
 {
