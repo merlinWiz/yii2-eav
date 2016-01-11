@@ -5,6 +5,7 @@
 
 namespace yarcode\eav;
 
+use yarcode\eav\models\Attribute;
 use Yii;
 use yii\base\DynamicModel as BaseDynamicModel;
 use yii\db\ActiveRecord;
@@ -26,8 +27,12 @@ class DynamicModel extends BaseDynamicModel
     public $activeForm;
     /** @var string[] */
     private $attributeLabels = [];
+    /** @var string  */
 
     public $fieldPrefix = 'eav';
+
+    /** @var EavBehavior link to the parent behavior instance */
+    private $behavior;
 
     /**
      * Constructor for creating form model from entity object
@@ -38,10 +43,10 @@ class DynamicModel extends BaseDynamicModel
     public static function create($params)
     {
         $params['class'] = static::className();
-        /** @var static $model */
+        /** @var self $model */
         $model = Yii::createObject($params);
 
-        foreach ($model->entityModel->getRelation('eavAttributes')->all() as $attribute) {
+        foreach ($model->entityModel->getRelation($model->behavior->relationName)->all() as $attribute /** @var Attribute $attribute */) {
             $handler = AttributeHandler::load($model, $attribute);
 
             $key = $handler->getAttributeName();
@@ -49,14 +54,17 @@ class DynamicModel extends BaseDynamicModel
             $model->defineAttribute($key, $handler->valueHandler->load());
             $model->defineAttributeLabel($key, $attribute->getAttribute('name'));
 
-            if ($attribute->required)
+            if ($attribute->required) {
                 $model->addRule($key, 'required');
+            }
 
-            if ($attribute->type->storeType == ValueHandler::STORE_TYPE_RAW)
+            if ($handler->valueHandler instanceof RawValueHandler) {
                 $model->addRule($key, 'default', ['value' => $attribute->defaultValue]);
+            }
 
-            if ($attribute->type->storeType == ValueHandler::STORE_TYPE_OPTION)
+            if ($handler->valueHandler instanceof OptionValueHandler) {
                 $model->addRule($key, 'default', ['value' => $attribute->defaultOptionId]);
+            }
 
             $model->handlers[$key] = $handler;
         }
@@ -102,5 +110,7 @@ class DynamicModel extends BaseDynamicModel
             $transaction->rollBack();
             throw $e;
         }
+
+        return true;
     }
 }

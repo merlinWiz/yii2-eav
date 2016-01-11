@@ -5,6 +5,7 @@
 
 namespace yarcode\eav;
 
+use yarcode\eav\models\Attribute;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Widget;
@@ -14,26 +15,27 @@ use yii\db\ActiveRecord;
  * Class AttributeHandler
  * @package yarcode\eav
  */
-class AttributeHandler extends Widget
+abstract class AttributeHandler extends Widget
 {
     const VALUE_HANDLER_CLASS = '\yarcode\eav\RawValueHandler';
+
     /** @var DynamicModel */
     public $owner;
     /** @var ValueHandler */
     public $valueHandler;
-    /** @var ActiveRecord */
+    /** @var Attribute */
     public $attributeModel;
 
     /**
      * @param DynamicModel $owner
-     * @param ActiveRecord $attributeModel
+     * @param Attribute $attributeModel
      * @return AttributeHandler
      * @throws \yii\base\InvalidConfigException
      */
     public static function load($owner, $attributeModel)
     {
         if (!class_exists($class = $attributeModel->type->handlerClass))
-            throw new InvalidParamException('Unknown class: ' . $class);
+            throw new InvalidParamException('Unknown handler class: ' . $class);
 
         $handler = Yii::createObject([
             'class' => $class,
@@ -64,6 +66,9 @@ class AttributeHandler extends Widget
         return $this->owner->fieldPrefix . strval($this->attributeModel->getPrimaryKey());
     }
 
+    /**
+     * @return array
+     */
     public function getOptions()
     {
         $result = [];

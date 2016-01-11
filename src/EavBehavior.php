@@ -6,7 +6,6 @@
 namespace yarcode\eav;
 
 use yii\base\Behavior;
-use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 
 /**
@@ -14,13 +13,15 @@ use yii\db\ActiveRecord;
  * @package yarcode\eav
  *
  * @mixin ActiveRecord
- * @property DynamicModel $eav;
+ * @property DynamicModel $eavModel;
  * @property ActiveRecord $owner
  */
 class EavBehavior extends Behavior
 {
     /** @var array */
     public $valueClass;
+    /** @var string */
+    public $relationName = 'eavAttributes';
 
     protected $dynamicModel;
 
@@ -32,12 +33,13 @@ class EavBehavior extends Behavior
     /**
      * @return DynamicModel
      */
-    public function getEav()
+    public function getEavModel()
     {
         if (!$this->dynamicModel instanceof DynamicModel) {
             $this->dynamicModel = DynamicModel::create([
                 'entityModel' => $this->owner,
                 'valueClass' => $this->valueClass,
+                'behavior' => $this,
             ]);
         }
         return $this->dynamicModel;

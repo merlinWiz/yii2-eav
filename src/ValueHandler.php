@@ -5,6 +5,7 @@
 
 namespace yarcode\eav;
 
+use yarcode\eav\models\Value;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,31 +17,28 @@ use yii\db\ActiveRecord;
  */
 abstract class ValueHandler
 {
-    const STORE_TYPE_RAW = 0;
-    const STORE_TYPE_OPTION = 1;
-    const STORE_TYPE_MULTIPLE_OPTIONS = 2;
-
     /** @var AttributeHandler */
     public $attributeHandler;
 
     /**
-     * @return ActiveRecord
+     * @return Value
      * @throws \Exception
      * @throws \yii\base\InvalidConfigException
      */
     public function getValueModel()
     {
         $dynamicModel = $this->attributeHandler->owner;
-        /** @var ActiveRecord $valueClass */
+        /** @var ActiveRecord|string $valueClass */
         $valueClass = $dynamicModel->valueClass;
 
+        /** @var Value $valueModel */
         $valueModel = $valueClass::findOne([
             'entityId' => $dynamicModel->entityModel->getPrimaryKey(),
             'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
         ]);
 
         if (!$valueModel instanceof ActiveRecord) {
-            /** @var ActiveRecord $valueModel */
+            /** @var Value $valueModel */
             $valueModel = new $valueClass;
             $valueModel->entityId = $dynamicModel->entityModel->getPrimaryKey();
             $valueModel->attributeId = $this->attributeHandler->attributeModel->getPrimaryKey();
@@ -55,5 +53,8 @@ abstract class ValueHandler
 
     abstract public function save();
 
+    /**
+     * @return string
+     */
     abstract public function getTextValue();
 }

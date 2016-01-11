@@ -5,6 +5,7 @@
 
 namespace yarcode\eav;
 
+use yarcode\eav\models\Value;
 use yii\db\ActiveRecord;
 
 /**
@@ -16,12 +17,16 @@ class MultipleOptionsValueHandler extends ValueHandler
     /** @var AttributeHandler */
     public $attributeHandler;
 
+    /**
+     * @inheritdoc
+     */
     public function load()
     {
         $dynamicModel = $this->attributeHandler->owner;
         /** @var ActiveRecord $valueClass */
         $valueClass = $dynamicModel->valueClass;
 
+        /** @var Value $models */
         $models = $valueClass::findAll([
             'entityId' => $dynamicModel->entityModel->getPrimaryKey(),
             'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
@@ -35,6 +40,9 @@ class MultipleOptionsValueHandler extends ValueHandler
         return $values;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function save()
     {
         $dynamicModel = $this->attributeHandler->owner;
@@ -74,10 +82,10 @@ class MultipleOptionsValueHandler extends ValueHandler
             $query = clone $baseQuery;
             $query->andWhere(['optionId' => $id]);
 
+            /** @var Value $valueModel */
             $valueModel = $query->one();
 
             if (!$valueModel instanceof ActiveRecord) {
-                /** @var ActiveRecord $valueModel */
                 $valueModel = new $valueClass;
                 $valueModel->entityId = $dynamicModel->entityModel->getPrimaryKey();
                 $valueModel->attributeId = $this->attributeHandler->attributeModel->getPrimaryKey();
@@ -88,12 +96,16 @@ class MultipleOptionsValueHandler extends ValueHandler
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getTextValue()
     {
         $dynamicModel = $this->attributeHandler->owner;
-        /** @var ActiveRecord $valueClass */
+        /** @var ActiveRecord|string $valueClass */
         $valueClass = $dynamicModel->valueClass;
 
+        /** @var Value[] $models */
         $models = $valueClass::findAll([
             'entityId' => $dynamicModel->entityModel->getPrimaryKey(),
             'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
