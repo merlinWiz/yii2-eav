@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 
 class RadioList extends AttributeHandler
 {
-    const VALUE_HANDLER_CLASS = '\yarcode\eav\OptionValueHandler';
+    const VALUE_HANDLER_CLASS = 'yarcode\eav\OptionValueHandler';
 
     public function init()
     {

@@ -19,7 +19,7 @@ use Yii;
  * @property AttributeOption $option
  * @property Attribute $attribute
  */
-abstract class Value extends StorageModel
+abstract class AttributeValue extends StorageModel
 {
     /**
      * @inheritdoc

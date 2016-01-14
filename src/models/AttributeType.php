@@ -4,6 +4,9 @@
  */
 namespace yarcode\eav\models;
 
+use yarcode\eav\AttributeHandler;
+use yarcode\eav\MultipleOptionsValueHandler;
+use yarcode\eav\OptionValueHandler;
 use yarcode\eav\StorageModel;
 use Yii;
 
@@ -36,5 +39,19 @@ abstract class AttributeType extends StorageModel
             'name' => 'Name',
             'handlerClass' => 'Handler Class',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasOptions()
+    {
+        /** @var AttributeHandler|string $c */
+        $c = $this->handlerClass;
+
+        return in_array($c::VALUE_HANDLER_CLASS, [
+            OptionValueHandler::className(),
+            MultipleOptionsValueHandler::className(),
+        ]);
     }
 }

@@ -7,9 +7,9 @@
  */
 use yii\helpers\Html;
 
-$this->title = $entityName . ' Attribute';
+$this->title = $entityName . ' Attributes';
 $this->params['breadcrumbs'][] = ['label' => $entityName . ' Attributes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Create';
 ?>
 <div class="eav-attribute-create">
     <h1><?= Html::encode($this->title) ?></h1>

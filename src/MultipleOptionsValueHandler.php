@@ -5,7 +5,7 @@
 
 namespace yarcode\eav;
 
-use yarcode\eav\models\Value;
+use yarcode\eav\models\AttributeValue;
 use yii\db\ActiveRecord;
 
 /**
@@ -26,7 +26,7 @@ class MultipleOptionsValueHandler extends ValueHandler
         /** @var ActiveRecord $valueClass */
         $valueClass = $dynamicModel->valueClass;
 
-        /** @var Value $models */
+        /** @var AttributeValue $models */
         $models = $valueClass::findAll([
             'entityId' => $dynamicModel->entityModel->getPrimaryKey(),
             'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
@@ -82,7 +82,7 @@ class MultipleOptionsValueHandler extends ValueHandler
             $query = clone $baseQuery;
             $query->andWhere(['optionId' => $id]);
 
-            /** @var Value $valueModel */
+            /** @var AttributeValue $valueModel */
             $valueModel = $query->one();
 
             if (!$valueModel instanceof ActiveRecord) {
@@ -105,7 +105,7 @@ class MultipleOptionsValueHandler extends ValueHandler
         /** @var ActiveRecord|string $valueClass */
         $valueClass = $dynamicModel->valueClass;
 
-        /** @var Value[] $models */
+        /** @var AttributeValue[] $models */
         $models = $valueClass::findAll([
             'entityId' => $dynamicModel->entityModel->getPrimaryKey(),
             'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),

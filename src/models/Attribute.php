@@ -20,7 +20,7 @@ use Yii;
  * @property AttributeOption $defaultOption
  * @property AttributeType $type
  * @property AttributeOption[] $options
- * @property Value[] $values
+ * @property AttributeValue[] $values
  */
 abstract class Attribute extends StorageModel
 {
@@ -30,6 +30,7 @@ abstract class Attribute extends StorageModel
     public function rules()
     {
         return [
+            [['typeId', 'name'], 'required'],
             [['typeId', 'defaultOptionId', 'required'], 'integer'],
             [['name', 'defaultValue'], 'string', 'max' => 255],
             ['name', 'unique'],

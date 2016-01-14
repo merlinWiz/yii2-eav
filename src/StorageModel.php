@@ -12,7 +12,7 @@ abstract class StorageModel extends ActiveRecord
     const CLASS_ATTRIBUTE = 'Attribute';
     const CLASS_ATTRIBUTE_TYPE = 'AttributeType';
     const CLASS_ATTRIBUTE_OPTION = 'AttributeOption';
-    const CLASS_VALUE = 'Value';
+    const CLASS_ATTRIBUTE_VALUE = 'AttributeValue';
 
     /**
      * @inheritdoc

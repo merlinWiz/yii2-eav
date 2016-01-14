@@ -5,7 +5,8 @@
 
 namespace yarcode\eav;
 
-use yarcode\eav\models\Value;
+use yarcode\eav\models\AttributeValue;
+use yii\base\Component;
 use yii\db\ActiveRecord;
 
 /**
@@ -15,13 +16,13 @@ use yii\db\ActiveRecord;
  * @property ActiveRecord $valueModel
  * @property string $textValue
  */
-abstract class ValueHandler
+abstract class ValueHandler extends Component
 {
     /** @var AttributeHandler */
     public $attributeHandler;
 
     /**
-     * @return Value
+     * @return AttributeValue
      * @throws \Exception
      * @throws \yii\base\InvalidConfigException
      */
@@ -31,14 +32,14 @@ abstract class ValueHandler
         /** @var ActiveRecord|string $valueClass */
         $valueClass = $dynamicModel->valueClass;
 
-        /** @var Value $valueModel */
+        /** @var AttributeValue $valueModel */
         $valueModel = $valueClass::findOne([
             'entityId' => $dynamicModel->entityModel->getPrimaryKey(),
             'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
         ]);
 
         if (!$valueModel instanceof ActiveRecord) {
-            /** @var Value $valueModel */
+            /** @var AttributeValue $valueModel */
             $valueModel = new $valueClass;
             $valueModel->entityId = $dynamicModel->entityModel->getPrimaryKey();
             $valueModel->attributeId = $this->attributeHandler->attributeModel->getPrimaryKey();

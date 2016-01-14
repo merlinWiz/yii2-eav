@@ -22,8 +22,10 @@ abstract class AttributeOption extends StorageModel
     public function rules()
     {
         return [
+            [['attributeId', 'value'], 'required'],
             [['attributeId'], 'integer'],
             [['value'], 'string', 'max' => 255],
+            ['value', 'unique', 'filter' => ['attributeId' => $this->attributeId]],
             ['attributeId', 'exist', 'skipOnError' => true, 'targetClass' => $this->getAdjacentClass(self::CLASS_ATTRIBUTE), 'targetAttribute' => ['attributeId' => 'id']],
         ];
     }

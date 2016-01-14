@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  */
 abstract class AttributeHandler extends Widget
 {
-    const VALUE_HANDLER_CLASS = '\yarcode\eav\RawValueHandler';
+    const VALUE_HANDLER_CLASS = 'yarcode\eav\RawValueHandler';
 
     /** @var DynamicModel */
     public $owner;

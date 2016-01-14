@@ -7,7 +7,7 @@
  */
 use yii\helpers\Html;
 
-$this->title = 'Update ' . $entityName . ' Attribute: ' . ' ' . $model->name;
+$this->title = $entityName . ' Attributes';
 $this->params['breadcrumbs'][] = ['label' => $entityName . ' Attributes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

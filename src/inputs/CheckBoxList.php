@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 
 class CheckBoxList extends AttributeHandler
 {
-    const VALUE_HANDLER_CLASS = '\yarcode\eav\MultipleOptionsValueHandler';
+    const VALUE_HANDLER_CLASS = 'yarcode\eav\MultipleOptionsValueHandler';
 
     public function init()
     {
