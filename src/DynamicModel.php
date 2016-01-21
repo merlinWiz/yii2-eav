@@ -32,7 +32,7 @@ class DynamicModel extends BaseDynamicModel
     public $fieldPrefix = 'eav';
 
     /** @var EavBehavior link to the parent behavior instance */
-    private $behavior;
+    public $behavior;
 
     /**
      * Constructor for creating form model from entity object
