@@ -40,4 +40,52 @@ public function getEavAttributes()
     $query->multiple = true;
     return $query;
 }
+```
 
+## Rendering
+
+*Controller example*
+```php
+public function actionProfileFields()
+{
+    $model = Yii::$app->user->identity->profile;
+    $model->setScenario(UserProfile::SCENARIO_UPDATE);
+
+    /** @var DynamicModel $eav */
+    $eav = $model->getEavModel();
+
+    if ($eav->load(Yii::$app->request->post()) && $eav->validate()) {
+        $dbTransaction = Yii::$app->db->beginTransaction();
+        try {
+            $eav->save(false);
+            $dbTransaction->commit();
+        } catch (\Exception $e) {
+            $dbTransaction->rollBack();
+            throw $e;
+        }
+        return $this->redirect(['index']);
+    }
+
+    return $this->render('profile-fields', [
+        'model' => $model,
+        'eav' => $eav
+    ]);
+}
+```
+*View example*
+```php
+<?php $form = ActiveForm::begin(); ?>
+
+<?php
+$eav->activeForm = $form;
+foreach ($eav->handlers as $handler) {
+    echo $handler->run();
+}
+?>
+
+<div class="form-group">
+    <?= Html::submitButton('Save', ['class' => 'btn btn-primary', 'name' => 'save-button']) ?>
+</div>
+
+<?php ActiveForm::end(); ?>
+```
